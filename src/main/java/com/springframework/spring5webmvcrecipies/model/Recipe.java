@@ -1,6 +1,7 @@
 package com.springframework.spring5webmvcrecipies.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,17 +13,19 @@ public class Recipe {
 
     private String description;
     private Integer prepTime;
-    private  Integer cookTime;
+    private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
     private Byte[] image;
@@ -33,9 +36,10 @@ public class Recipe {
 
     @ManyToMany
     @JoinTable(name = "recipe_category",
-    joinColumns = @JoinColumn(name = "recipe_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+
+    private Set<Category> categories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -131,6 +135,7 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Set<Ingredient> getIngredients() {
@@ -139,6 +144,12 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Ingredient addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.getIngredients().add(ingredient);
+        return ingredient;
     }
 
     public Set<Category> getCategories() {

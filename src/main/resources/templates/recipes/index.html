@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Recipes</title>
+</head>
+<body>
+<!--/*@thymesVar id="owner" type="com.springframework.spring5petclinic.model.Owner"*/-->
+<h2 th:text="'List of Recipes'">List of Recipes</h2>
+
+<table class="table table-striped ">
+    <thead>
+    <tr>
+        <th style="width: 150px;">ID</th>
+        <th style="width: 150px;">Description</th>
+        <th style="width: 150px;">Preparation Time</th>
+        <th style="width: 150px;">Cook Time</th>
+        <th style="width: 150px;">Servings</th>
+        <th style="width: 150px;">Ingredients</th>
+        <th style="width: 150px;">Directions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recipe: ${recipes}">
+        <td th:text="${recipe.id}" style="width: 150px;"></td>
+        <td th:text="${recipe.description}" style="width: 150px;"></td>
+        <td th:text="${recipe.prepTime}" style="width: 150px;"></td>
+        <td th:text="${recipe.cookTime}" style="width: 150px;"></td>
+        <td th:text="${recipe.servings}" style="width: 150px;"></td>
+        <td th:text="${recipe.ingredients}" style="width: 150px;"></td>
+        <td th:text="${recipe.directions}" style="width: 150px;"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
